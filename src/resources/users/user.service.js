@@ -2,6 +2,8 @@ const { HTTP_STATUS } = require('../../common/constants');
 const SchemaValidationError = require('../../database/error/SchemaValidationError');
 const UUID = require('../../utils/uuid/UUID');
 const userRepo = require('./user.memory.repository');
+const taskRepo = require('../tasks/task.memory.repository');
+
 const User = require('./user.model');
 
 const create = async ({ request, response }) => {
@@ -88,6 +90,7 @@ const deleteOne = async ({ request, response }) => {
       const user = await userRepo.deleteOne({ id: userID });
       if (user) {
         await userRepo.deleteOne({ id: userID });
+        await taskRepo.updateMany({ userId: userID }, { userId: null });
         response.status = HTTP_STATUS.NO_CONTENT;
       } else {
         response.status = HTTP_STATUS.NOT_FOUND;
