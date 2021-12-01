@@ -118,7 +118,7 @@ function schemaValidator(model, data) {
       Object.entries(validation).forEach(([key, value]) => {
         const validate = getValidator(key, value);
         if (!validate(data[prop])) {
-          throw new SchemaValidationError(`${className}.${prop}`, key);
+          throw new SchemaValidationError(`${prop} is not valid => [${value}]`);
         }
       });
     }

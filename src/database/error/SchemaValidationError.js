@@ -1,5 +1,6 @@
 module.exports = class SchemaValidationError extends Error {
-  constructor(prop, validator) {
-    super(`${prop} is not valid => [${validator}]`);
+  // eslint-disable-next-line no-useless-constructor
+  constructor(message) {
+    super(message);
   }
 };
