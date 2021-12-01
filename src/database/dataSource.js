@@ -63,6 +63,30 @@ class DataSource {
     return Promise.resolve(null);
   }
 
+  updateDocuments(collection, query, update) {
+    const docs = this.getCollection(collection);
+    const filtered = docs.filter(DataSource.queryFilter(query));
+    if (filtered.length) {
+      filtered.forEach((o) => {
+        Object.assign(o, update);
+      });
+      return Promise.resolve(true);
+    }
+    return Promise.resolve(null);
+  }
+
+  deleteDocuments(collection, query) {
+    const docs = this.getCollection(collection);
+    const toDelete = docs.filter(DataSource.queryFilter(query));
+    if (toDelete) {
+      toDelete.forEach((doc) =>
+        this.deleteDocument(collection, { id: doc.id })
+      );
+      return Promise.resolve(true);
+    }
+    return Promise.resolve(null);
+  }
+
   deleteDocument(collection, query) {
     const docs = this.getCollection(collection);
     const docIndex = docs.findIndex(DataSource.queryFilter(query));
