@@ -1,6 +1,6 @@
 module.exports = class SchemaValidationError extends Error {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(message) {
+  constructor(message, statusCode) {
     super(message);
+    this.statusCode = statusCode;
   }
 };
