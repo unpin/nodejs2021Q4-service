@@ -3,6 +3,7 @@ const json = require('koa-bodyparser');
 
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
+const taskRouter = require('./resources/tasks/task.router');
 
 const app = new Koa();
 
@@ -21,5 +22,6 @@ app.use(async (ctx, next) => {
 
 app.use(userRouter.routes());
 app.use(boardRouter.routes());
+app.use(taskRouter.routes());
 
 module.exports = app;
