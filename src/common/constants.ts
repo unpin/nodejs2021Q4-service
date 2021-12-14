@@ -9,4 +9,4 @@ const HTTP_STATUS = {
 
 Object.freeze(HTTP_STATUS);
 
-module.exports = { HTTP_STATUS };
+export default HTTP_STATUS;
