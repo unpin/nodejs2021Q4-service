@@ -23,7 +23,7 @@ export default class UUID {
   /**
    * Generates a random RFC 4122 version 4 UUID
    *
-   * @param options{@link UUIDOptions} UUIDOptions
+   * @param options - {@link UUIDOptions} UUIDOptions
    * @returns a random UUID string
    *
    */
