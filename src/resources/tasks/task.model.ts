@@ -36,8 +36,7 @@ export default class Task extends Model {
 
   /**
    *
-   * Validates task data and throws SchemaValidationError if
-   * provided data is not valid
+   * Validates an instance of Task class
    *
    * @throws {@link SchemaValidationError} if task data is not valid
    * @returns Returns void

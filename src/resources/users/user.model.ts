@@ -43,7 +43,7 @@ export default class User extends Model {
 
   /**
    *
-   * Creates an instance of User class from data provided in object.
+   * Validates an instance of User class
    *
    * @throws {@link SchemaValidationError} if user data is not valid
    * @returns Returns void

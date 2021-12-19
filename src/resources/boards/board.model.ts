@@ -24,8 +24,7 @@ export default class Board extends Model {
 
   /**
    *
-   * Validates board data and throws SchemaValidationError if
-   * provided data is not valid
+   * Validates an instance of Board class
    *
    * @throws {@link SchemaValidationError} if board data is not valid
    * @returns Returns void
