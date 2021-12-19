@@ -1,18 +1,17 @@
 const { HTTP_STATUS } = require('../../common/constants');
 const SchemaValidationError = require('../../database/error/SchemaValidationError');
 const UUID = require('../../utils/uuid/UUID');
-const userRepo = require('./user.memory.repository');
 const taskRepo = require('../tasks/task.memory.repository');
-
-const User = require('./user.model');
+const boardRepo = require('./board.memory.repository');
+const Board = require('./board.model');
 
 const create = async ({ request, response }) => {
   try {
-    const user = new User(request.body);
-    user.validate();
-    const saved = await userRepo.createOne(user);
+    const board = new Board(request.body);
+    board.validate();
+    const saved = await boardRepo.createOne(board);
     response.status = HTTP_STATUS.CREATED;
-    response.body = User.toResponse(saved);
+    response.body = saved;
   } catch (error) {
     if (error instanceof SchemaValidationError) {
       response.body = { message: error.message };
@@ -26,8 +25,8 @@ const create = async ({ request, response }) => {
 
 const getAll = async ({ response }) => {
   try {
-    const users = await userRepo.getAll();
-    response.body = users.map(User.toResponse);
+    const boards = await boardRepo.getAll();
+    response.body = boards;
     response.status = HTTP_STATUS.OK;
   } catch (error) {
     console.error(error.message);
@@ -36,19 +35,19 @@ const getAll = async ({ response }) => {
 };
 
 const getOne = async ({ request, response }) => {
-  const { userID } = request.params;
+  const { boardID } = request.params;
   try {
-    if (!UUID.isValid(userID)) {
+    if (!UUID.isValid(boardID)) {
       response.status = HTTP_STATUS.BAD_REQUEST;
-      response.body = { message: 'User ID is not valid.' };
+      response.body = { message: 'Board ID is not valid.' };
     } else {
-      const user = await userRepo.getByID(userID);
-      if (user) {
+      const board = await boardRepo.getByID(boardID);
+      if (board) {
         response.status = HTTP_STATUS.OK;
-        response.body = User.toResponse(user);
+        response.body = board;
       } else {
         response.status = HTTP_STATUS.NOT_FOUND;
-        response.body = { message: 'User with this ID has not been found.' };
+        response.body = { message: 'Board with this ID has not been found.' };
       }
     }
   } catch (error) {
@@ -58,20 +57,22 @@ const getOne = async ({ request, response }) => {
 };
 
 const updateOne = async ({ request, response }) => {
-  const { userID } = request.params;
+  const { boardID } = request.params;
   try {
-    if (!UUID.isValid(userID)) {
+    if (!UUID.isValid(boardID)) {
       response.status = HTTP_STATUS.BAD_REQUEST;
-      response.body = { message: 'User ID is not valid.' };
+      response.body = { message: 'Board ID is not valid.' };
     } else {
-      const user = await userRepo.getByID(userID);
-      if (user) {
-        const updated = await userRepo.updateOne({ id: userID }, request.body);
+      const board = await boardRepo.getByID(boardID);
+      if (board) {
+        response.body = await boardRepo.updateOne(
+          { id: boardID },
+          request.body
+        );
         response.status = HTTP_STATUS.OK;
-        response.body = User.toResponse(updated);
       } else {
         response.status = HTTP_STATUS.NOT_FOUND;
-        response.body = { message: 'User with this ID has not been found.' };
+        response.body = { message: 'Board with this ID has not been found.' };
       }
     }
   } catch (error) {
@@ -81,20 +82,20 @@ const updateOne = async ({ request, response }) => {
 };
 
 const deleteOne = async ({ request, response }) => {
-  const { userID } = request.params;
+  const { boardID } = request.params;
   try {
-    if (!UUID.isValid(userID)) {
+    if (!UUID.isValid(boardID)) {
       response.status = HTTP_STATUS.BAD_REQUEST;
-      response.body = { message: 'User ID is not valid.' };
+      response.body = { message: 'Board ID is not valid.' };
     } else {
-      const user = await userRepo.deleteOne({ id: userID });
-      if (user) {
-        await userRepo.deleteOne({ id: userID });
-        await taskRepo.updateMany({ userId: userID }, { userId: null });
+      const board = await boardRepo.deleteOne({ id: boardID });
+      if (board) {
+        await boardRepo.deleteOne({ id: boardID });
+        await taskRepo.deleteMany({ boardId: boardID });
         response.status = HTTP_STATUS.NO_CONTENT;
       } else {
         response.status = HTTP_STATUS.NOT_FOUND;
-        response.body = { message: 'User with this ID has not been found.' };
+        response.body = { message: 'Board with this ID has not been found.' };
       }
     }
   } catch (error) {

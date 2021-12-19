@@ -1,19 +1,14 @@
 const schemaValidator = require('../../database/schema/schemaValidator');
 const UUID = require('../../utils/uuid/UUID');
 
-class User {
+class Board {
   constructor(data) {
-    Object.assign(this, User.trimObject(data));
-  }
-
-  static toResponse(user) {
-    const { password, ...publicUser } = user;
-    return publicUser;
+    Object.assign(this, Board.trimObject(data));
   }
 
   static trimObject(data) {
     const trimmed = {};
-    Object.keys(User.schema).forEach((prop) => {
+    Object.keys(Board.schema).forEach((prop) => {
       if (prop in data) {
         trimmed[prop] = data[prop];
       }
@@ -22,29 +17,23 @@ class User {
   }
 
   validate() {
-    schemaValidator(User, this);
+    schemaValidator(Board, this);
   }
 }
 
-User.schema = {
+Board.schema = {
   id: {
     type: UUID,
   },
-  name: {
+  title: {
     type: String,
     minlen: 1,
     required: true,
   },
-  login: {
-    type: String,
-    minlen: 1,
-    required: true,
-  },
-  password: {
-    type: String,
-    minlen: 1,
+  columns: {
+    type: Array,
     required: true,
   },
 };
 
-module.exports = User;
+module.exports = Board;
