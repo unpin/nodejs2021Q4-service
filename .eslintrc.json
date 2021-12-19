@@ -25,10 +25,10 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:node/recommended",
     "airbnb-base",
-    "prettier"
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "import/extensions": "off",
@@ -45,8 +45,8 @@
         "tryExtensions": [".js", ".ts", ".json", ".node"]
       }
     ],
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "tsdoc/syntax": "warn"
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"]
+  "plugins": ["@typescript-eslint", "eslint-plugin-tsdoc"]
 }
