@@ -15,11 +15,9 @@ export default class Task extends Model {
   columnId?: string;
 
   /**
-   *
    * Creates an instance of Task class from data provided in object.
    *
    * @param data - object with user data
-   * @returns Returns {@link User} instance
    *
    */
 

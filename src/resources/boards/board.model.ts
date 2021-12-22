@@ -7,11 +7,9 @@ export default class Board extends Model {
   columns: string[];
 
   /**
-   *
    * Creates an instance of Board class from data provided in object.
    *
    * @param data - object with user data
-   * @returns Returns {@link User} instance
    *
    */
 
