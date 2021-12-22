@@ -30,9 +30,6 @@ export async function create(
     response.status(HTTP_STATUS.CREATED);
     response.send(User.toResponse(saved));
   } catch (error) {
-    if (error instanceof Error) {
-      process.stderr.write(error.message);
-    }
     if (error instanceof SchemaValidationError) {
       response.status(HTTP_STATUS.BAD_REQUEST);
       response.send({ message: error.message });
