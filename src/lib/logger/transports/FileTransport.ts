@@ -11,7 +11,7 @@ type FileTransportOptions = {
   dateTimeFormat?: string;
 };
 
-const defaultDateTimeFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
+const defaultDateTimeFormat = 'YYYY-MM-DD HH:mm:ss:SSS';
 
 export class FileTransport implements iTransport {
   level: number;
