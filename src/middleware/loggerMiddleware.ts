@@ -9,16 +9,26 @@ export default function httpLogger(
   next: NextFunction
 ): void {
   const start = Date.now();
-  const { method, url, query } = req;
+  const { method, url, query, body } = req;
   next();
   finished(res, () => {
     const duration = Date.now() - start;
     const { statusCode } = res;
-    const message = `${chalk.red(method)} ${url} ${chalk.yellow(
+    let message = `${chalk.red(method)} ${url} ${chalk.yellow(
       statusCode
-    )} ${chalk.green(duration)}ms Body: ${JSON.stringify(
-      req.body
-    )} Query: ${JSON.stringify(query)}`;
+    )} ${chalk.green(`${duration}ms`)}`;
+
+    if (Object.keys(query).length > 0) {
+      message += ` ${chalk.yellow(`Query:`)} ${chalk.blue(
+        JSON.stringify(query)
+      )}`;
+    }
+
+    if (Object.keys(body).length > 0) {
+      message += ` ${chalk.yellow(`Body:`)} ${chalk.blue(
+        JSON.stringify(body)
+      )}`;
+    }
     Logger.info(message);
   });
 }
