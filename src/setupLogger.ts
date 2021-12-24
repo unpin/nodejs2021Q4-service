@@ -3,7 +3,7 @@ import { Logger } from './lib/logger/Logger';
 
 dotenv.config();
 
-const LOGGER_LEVEL = Number(process.env.LOGGER_LEVEL) || Logger.LEVEL.INFO;
+const LOGGER_LEVEL = Number(process.env.LOGGER_LEVEL) ?? Logger.LEVEL.INFO;
 
 Logger.createLogger({
   level: LOGGER_LEVEL,
