@@ -77,7 +77,7 @@ export class FileTransport implements iTransport {
     try {
       return fs.openSync(this.filename, 'a');
     } catch (error) {
-      process.stderr.write(`Error opening file ${this.filename}: ${error}`);
+      Logger.error(`Error opening file ${this.filename}: ${error}`);
       throw error;
     }
   }
