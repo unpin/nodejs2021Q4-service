@@ -2,6 +2,7 @@ import fs from 'fs';
 import moment from 'moment';
 import iTransport from './iTransport';
 import { LoggerLevel as LEVEL } from '../LoggerLevel';
+import { Logger } from '../Logger';
 
 type FileTransportOptions = {
   name: string;
