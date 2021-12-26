@@ -49,6 +49,7 @@
     "dotenv": "10.0.0",
     "express": "^4.17.1",
     "moment": "^2.29.1",
+    "strip-ansi": "^6.0.0",
     "yamljs": "0.3.0"
   },
   "devDependencies": {

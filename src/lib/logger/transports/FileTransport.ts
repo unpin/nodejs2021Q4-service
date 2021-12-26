@@ -1,5 +1,6 @@
 import fs from 'fs';
 import moment from 'moment';
+import stripAnsi from 'strip-ansi';
 import iTransport from './iTransport';
 import { LoggerLevel as LEVEL } from '../LoggerLevel';
 import { Logger } from '../Logger';
@@ -58,7 +59,7 @@ export class FileTransport implements iTransport {
     if (this.fd) {
       fs.writeFile(
         this.fd,
-        `${timestamp}[${LEVEL[level]}] ${message}\n`,
+        `${timestamp}[${LEVEL[level]}] ${stripAnsi(message)}\n`,
         (err) => {
           if (err) throw err;
         }
