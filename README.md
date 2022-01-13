@@ -12,15 +12,16 @@ The following is a step-by-step guide to using the RS School REST service with D
 
 ## Downloading project
 
-```
+```sh
 git clone https://github.com/unpin/nodejs2021Q4-service.git
-cd nodejs2021Q4-service
+cd nodejs2021Q4-service     # Change directory to the project folder
+git switch setup-docker     # Switch to the setup-docker branch
 ```
 
 ## Running application inside a Docker container
 
-```
-npm run docker:up
+```sh
+npm run docker:up           # Run the command to build and run the Docker container
 ```
 
 > Before running the command make sure that Docker is installed and running.
