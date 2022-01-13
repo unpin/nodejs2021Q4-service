@@ -10,8 +10,8 @@ services:
       - PORT:${PORT}
     volumes:
       - type: bind
-        source: ./
-        target: /home/app
+        source: ./src
+        target: /home/app/src
       - app_logs:/home/app/logs
     restart: unless-stopped
     networks:
