@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express, { Express } from 'express';
 import './setupLogger';
 import userRouter from './resources/users/user.router';
