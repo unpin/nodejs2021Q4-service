@@ -21,16 +21,23 @@ git switch setup-docker     # Switch to the setup-docker branch
 ## Running application inside a Docker container
 
 ```sh
-npm run docker:up           # Run the command to build and run the Docker container
+npm run docker:up           # build and run the Docker container
+npm run docker:down         # turn off Docker container and clean DB storage
 ```
 
 > Before running the command make sure that Docker is installed and running.
 
 After running script `npm docker:up` the application will run on port (4000 as default) or you can specify the port number in the .env file located in the root folder of the project.
 
----
+## Test Docker Application
 
-## Running the application locally
+1. Run application using `npm run docker:up`
+2. Go to project folder and run `npm install` to install dependencies
+3. Run `npm run test` to run test suites
+
+<br>
+
+# Running the application locally
 
 ```
 git clone {repository URL}
