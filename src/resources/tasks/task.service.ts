@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from '../../common/constants';
 import UUID from '../../utils/uuid/UUID';
-import * as taskRepo from './task.memory.repository';
-import * as boardRepo from '../boards/board.memory.repository';
-import Task from './task.model';
+import * as taskRepo from './task.db';
+import * as boardRepo from '../boards/board.db';
 import { httpErrorHandler } from '../httpErrorHandler';
 
 /**
@@ -29,9 +28,8 @@ export async function create(
       response.status(HTTP_STATUS.BAD_REQUEST);
       response.json({ message: 'Board ID is not valid.' });
     } else {
-      const task = new Task(request.body);
+      const task = request.body;
       task.boardId = boardID;
-      task.validate();
       const saved = await taskRepo.createOne(task);
       response.status(HTTP_STATUS.CREATED);
       response.json(saved);

@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from '../../common/constants';
 import UUID from '../../utils/uuid/UUID';
-import * as userRepo from './user.memory.repository';
-import * as taskRepo from '../tasks/task.memory.repository';
-import User from './user.model';
+import * as userRepo from './user.db';
 import { httpErrorHandler } from '../httpErrorHandler';
+import { User } from '../../entity/User';
 
 /**
  * Handler for request POST /users creates a new User in the database.
@@ -24,11 +23,9 @@ export async function create(
   response: Response
 ): Promise<void> {
   try {
-    const user = new User(request.body);
-    user.validate();
-    const saved = await (<Promise<User>>userRepo.createOne(user));
+    const saved = await userRepo.createOne(request.body);
     response.status(HTTP_STATUS.CREATED);
-    response.send(User.toResponse(saved));
+    response.send(toResponse(saved));
   } catch (error) {
     httpErrorHandler(request, response, error);
   }
@@ -53,25 +50,17 @@ export async function getAll(
   try {
     const users = await userRepo.getAll();
     response.status(HTTP_STATUS.OK);
-    response.send(users.map(User.toResponse));
+    response.send(users.map(toResponse));
   } catch (error) {
     httpErrorHandler(request, response, error);
   }
 }
 
-/**
- * Handler for request GET /users/:id gets a user with the given userID.
- * Sends a response with one of the following content/status code:
- * - 200 and a User object if the user has been found
- * - 400 if the userID is not valid
- * - 404 if the user has not been found
- * - 500 if an error has occurred
- *
- * @param request - express {@link Request} object
- * @param response - express {@link Response} object
- * @returns Returns {@link Promise}\<void\>
- *
- */
+function toResponse(user: User) {
+  const publicUser = { ...user };
+  delete publicUser.password;
+  return publicUser;
+}
 
 export async function getById(
   request: Request,
@@ -86,7 +75,7 @@ export async function getById(
       const user = await userRepo.getByID(userID);
       if (user) {
         response.status(HTTP_STATUS.OK);
-        response.send(User.toResponse(user));
+        response.send(toResponse(user));
       } else {
         response.status(HTTP_STATUS.NOT_FOUND);
         response.send({ message: 'User with this ID has not been found.' });
@@ -125,7 +114,7 @@ export async function findByIdAndUpdate(
       const updated = await userRepo.updateOne({ id: userID }, request.body);
       if (updated) {
         response.status(HTTP_STATUS.OK);
-        response.send(User.toResponse(updated));
+        response.send(toResponse(updated));
       } else {
         response.status(HTTP_STATUS.NOT_FOUND);
         response.send({ message: 'User with this ID has not been found.' });
@@ -136,19 +125,19 @@ export async function findByIdAndUpdate(
   }
 }
 
-/**
- * Handler for request DELETE /users/:id deletes a user with the given userID.
- * Sends a response with one of the following content/status code:
- * - 204 if the user has been successfully deleted
- * - 400 if the userID is not valid
- * - 404 if the user has not been found
- * - 500 if an error has occurred
- *
- * @param request - express {@link Request} object
- * @param response - express {@link Response} object
- * @returns Returns {@link Promise}\<void\>
- *
- */
+// /**
+//  * Handler for request DELETE /users/:id deletes a user with the given userID.
+//  * Sends a response with one of the following content/status code:
+//  * - 204 if the user has been successfully deleted
+//  * - 400 if the userID is not valid
+//  * - 404 if the user has not been found
+//  * - 500 if an error has occurred
+//  *
+//  * @param request - express {@link Request} object
+//  * @param response - express {@link Response} object
+//  * @returns Returns {@link Promise}\<void\>
+//  *
+//  */
 
 export async function findByIdAndDelete(
   request: Request,
@@ -161,9 +150,10 @@ export async function findByIdAndDelete(
       response.send({ message: 'User ID is not valid.' });
     } else {
       const user = await userRepo.deleteOne({ id: userID });
+
       if (user) {
         await userRepo.deleteOne({ id: userID });
-        await taskRepo.updateMany({ userId: userID }, { userId: null });
+        // await taskRepo.updateMany({ userId: userID }, { userId: null });
 
         response.status(HTTP_STATUS.NO_CONTENT);
         response.end();

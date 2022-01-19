@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from '../../common/constants';
+import { Board } from '../../entity/Board';
+// import { Col } from '../../entity/Column';
 import UUID from '../../utils/uuid/UUID';
 import { httpErrorHandler } from '../httpErrorHandler';
 import * as taskRepo from '../tasks/task.memory.repository';
-import * as boardRepo from './board.memory.repository';
-import Board from './board.model';
+import * as boardRepo from './board.db';
 
 /**
  * Handler for request POST /boards creates a new Board in the database.
@@ -24,11 +25,11 @@ export async function create(
   response: Response
 ): Promise<void> {
   try {
-    const board = new Board(request.body);
-    board.validate();
-    const saved = await boardRepo.createOne(board);
+    const board = Board.create(request.body as Partial<Board>);
+    await board.save();
+
     response.status(HTTP_STATUS.CREATED);
-    response.json(saved);
+    response.json(board);
   } catch (error) {
     httpErrorHandler(request, response, error);
   }
