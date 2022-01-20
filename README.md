@@ -1,8 +1,8 @@
-# RS School REST service with Docker
+# RS School Typeorm with Postgres
 
 ## Description
 
-The following is a step-by-step guide to using the RS School REST service with Docker.
+The following is a step-by-step guide to using the RS School REST service with Typeorm, Postgres and Docker.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ The following is a step-by-step guide to using the RS School REST service with D
 ```sh
 git clone https://github.com/unpin/nodejs2021Q4-service.git
 cd nodejs2021Q4-service     # Change directory to the project folder
-git switch setup-docker     # Switch to the setup-docker branch
+git switch postgres         # Switch to the postgres branch
 ```
 
 ## Running application inside a Docker container
