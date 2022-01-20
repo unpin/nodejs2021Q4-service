@@ -45,7 +45,10 @@
         "tryExtensions": [".js", ".ts", ".json", ".node"]
       }
     ],
-    "tsdoc/syntax": "warn"
+    "tsdoc/syntax": "warn",
+    "no-shadow": ["off"],
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-use-before-define": ["off"]
   },
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "eslint-plugin-tsdoc"]

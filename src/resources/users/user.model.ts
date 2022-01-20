@@ -11,11 +11,9 @@ export default class User extends Model {
   password?: string;
 
   /**
-   *
    * Creates an instance of User from provided data object.
    *
    * @param data - object with user data
-   * @returns Returns {@link User} instance
    *
    */
 

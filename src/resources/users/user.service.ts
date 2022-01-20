@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import HTTP_STATUS from '../../common/constants';
-import SchemaValidationError from '../../database/error/SchemaValidationError';
 import UUID from '../../utils/uuid/UUID';
 import * as userRepo from './user.memory.repository';
 import * as taskRepo from '../tasks/task.memory.repository';
 import User from './user.model';
+import { httpErrorHandler } from '../httpErrorHandler';
 
 /**
  * Handler for request POST /users creates a new User in the database.
@@ -30,17 +30,7 @@ export async function create(
     response.status(HTTP_STATUS.CREATED);
     response.send(User.toResponse(saved));
   } catch (error) {
-    if (error instanceof Error) {
-      process.stderr.write(error.message);
-    }
-    if (error instanceof SchemaValidationError) {
-      response.status(HTTP_STATUS.BAD_REQUEST);
-      response.send({ message: error.message });
-    } else if (error instanceof Error) {
-      process.stderr.write(error.message);
-    }
-    response.status(HTTP_STATUS.INTERNAL_ERROR);
-    response.end();
+    httpErrorHandler(request, response, error);
   }
 }
 
@@ -56,17 +46,16 @@ export async function create(
  *
  */
 
-export async function getAll(_: Request, response: Response): Promise<void> {
+export async function getAll(
+  request: Request,
+  response: Response
+): Promise<void> {
   try {
     const users = await userRepo.getAll();
     response.status(HTTP_STATUS.OK);
     response.send(users.map(User.toResponse));
   } catch (error) {
-    if (error instanceof Error) {
-      process.stderr.write(error.message);
-    }
-    response.status(HTTP_STATUS.INTERNAL_ERROR);
-    response.end();
+    httpErrorHandler(request, response, error);
   }
 }
 
@@ -104,11 +93,7 @@ export async function getById(
       }
     }
   } catch (error) {
-    if (error instanceof Error) {
-      process.stderr.write(error.message);
-    }
-    response.status(HTTP_STATUS.INTERNAL_ERROR);
-    response.end();
+    httpErrorHandler(request, response, error);
   }
 }
 
@@ -147,11 +132,7 @@ export async function findByIdAndUpdate(
       }
     }
   } catch (error) {
-    if (error instanceof Error) {
-      process.stderr.write(error.message);
-    }
-    response.status(HTTP_STATUS.INTERNAL_ERROR);
-    response.end();
+    httpErrorHandler(request, response, error);
   }
 }
 
@@ -192,10 +173,6 @@ export async function findByIdAndDelete(
       }
     }
   } catch (error) {
-    if (error instanceof Error) {
-      process.stderr.write(error.message);
-    }
-    response.status(HTTP_STATUS.INTERNAL_ERROR);
-    response.end();
+    httpErrorHandler(request, response, error);
   }
 }
