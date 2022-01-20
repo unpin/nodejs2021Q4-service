@@ -14,4 +14,5 @@ connect()
   .catch((error) => {
     Logger.error('Failed to connect to the database');
     Logger.error(error);
+    process.exit(1);
   });
