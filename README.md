@@ -1,11 +1,36 @@
-# RS School REST service
+# RS School REST service with Docker
+
+## Description
+
+The following is a step-by-step guide to using the RS School REST service with Docker.
 
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
-- Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Node.js version 16.13.0 or newer - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Docker version 20.10 or newer - [Download & Install Docker](https://docs.docker.com/desktop/windows/install/).
 
-## Downloading
+## Downloading project
+
+```sh
+git clone https://github.com/unpin/nodejs2021Q4-service.git
+cd nodejs2021Q4-service     # Change directory to the project folder
+git switch setup-docker     # Switch to the setup-docker branch
+```
+
+## Running application inside a Docker container
+
+```sh
+npm run docker:up           # Run the command to build and run the Docker container
+```
+
+> Before running the command make sure that Docker is installed and running.
+
+After running script `npm docker:up` the application will run on port (4000 as default) or you can specify the port number in the .env file located in the root folder of the project.
+
+---
+
+## Running the application locally
 
 ```
 git clone {repository URL}
