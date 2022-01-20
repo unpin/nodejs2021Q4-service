@@ -1,4 +1,7 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { JWT_SECRET_KEY } from '../common/config';
 import SchemaValidationError from '../database/error/SchemaValidationError';
 import Schema from '../database/schema/Schema';
 import UUID from '../utils/uuid/UUID';
@@ -48,4 +51,17 @@ export class User extends BaseEntity {
       required: true,
     },
   };
+
+  generateToken() {
+    return jwt.sign({ usedId: this.id, login: this.login }, JWT_SECRET_KEY, {
+      expiresIn: '1h',
+    });
+  }
+
+  passwordsMatch(password: string) {
+    if (!this.password) {
+      return false;
+    }
+    return bcrypt.compareSync(password, this.password);
+  }
 }
