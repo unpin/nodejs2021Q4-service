@@ -43,7 +43,7 @@ export class name1642615094457 implements MigrationInterface {
             ADD CONSTRAINT "FK_d88edac9d7990145ff6831a7bb3" FOREIGN KEY ("boardId") REFERENCES "board"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
         await queryRunner.query(`INSERT INTO "user" (name, login, password)
-        VALUES('admin','admin','admin')`);
+        VALUES('admin','admin','$2b$10$MHjNibyjzAC4VRDshMIEw.NDv1OmaLR0qr8xXe9HuejO0kcSvezV.')`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

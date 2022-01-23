@@ -7,19 +7,14 @@ async function login(req: Request, res: Response): Promise<void> {
   try {
     const user = await User.findOne({ login: req.body.login });
     if (user) {
-      const token = user.generateToken();
-      res.json({ token });
-
-      // Commented out password check because tests do not pass
-
-      // if (user.passwordsMatch(req.body.password)) {
-      //   const token = user.generateToken();
-      //   res.json({ token });
-      // } else {
-      //   res
-      //     .status(HTTP_STATUS.FORBIDDEN)
-      //     .send({ message: 'Passwords do not match' });
-      // }
+      if (user.passwordsMatch(req.body.password)) {
+        const token = user.generateToken();
+        res.json({ token });
+      } else {
+        res
+          .status(HTTP_STATUS.FORBIDDEN)
+          .send({ message: 'Passwords do not match' });
+      }
     } else {
       res.status(HTTP_STATUS.FORBIDDEN).send({ message: 'User not found' });
     }
