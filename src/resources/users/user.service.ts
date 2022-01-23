@@ -120,6 +120,9 @@ export async function findByIdAndUpdate(
       response.status(HTTP_STATUS.BAD_REQUEST);
       response.send({ message: 'User ID is not valid.' });
     } else {
+      if (request.body.password) {
+        request.body.password = bcrypt.hashSync(request.body.password, 10);
+      }
       const updated = await userRepo.updateOne({ id: userID }, request.body);
       if (updated) {
         response.status(HTTP_STATUS.OK);
