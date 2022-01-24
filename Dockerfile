@@ -10,7 +10,6 @@ RUN npm install -g nodemon ts-node
 
 RUN npm install --production
 
-
 COPY . .
 
 CMD [ "npm", "start" ]
