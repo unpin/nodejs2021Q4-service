@@ -10,6 +10,7 @@ import {
   POSTGRES_PASSWORD,
   POSTGRES_DB,
 } from './common/config';
+import { UserModule } from './users/user.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import {
       synchronize: true,
       migrationsRun: false,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
