@@ -1,3 +1,4 @@
+
 # RS School REST service with Docker and Auth
 
 ## Description
