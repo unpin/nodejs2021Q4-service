@@ -11,6 +11,8 @@ import {
   POSTGRES_DB,
 } from './common/config';
 import { UserModule } from './users/user.module';
+import { BoardModule } from './boards/board.module';
+import { TaskModule } from './tasks/task.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { UserModule } from './users/user.module';
       migrationsRun: false,
     }),
     UserModule,
+    BoardModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
