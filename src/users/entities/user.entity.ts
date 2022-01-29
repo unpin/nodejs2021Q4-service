@@ -1,4 +1,6 @@
+import * as jwt from 'jsonwebtoken';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { JWT_SECRET_KEY } from '../../common/config';
 
 @Entity()
 export class User {
@@ -18,5 +20,11 @@ export class User {
     const publicUser = { ...user };
     delete publicUser.password;
     return publicUser;
+  }
+
+  generateJWTToken() {
+    return jwt.sign({ usedId: this.id, login: this.login }, JWT_SECRET_KEY, {
+      expiresIn: '12h',
+    });
   }
 }
