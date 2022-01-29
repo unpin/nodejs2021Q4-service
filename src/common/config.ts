@@ -9,3 +9,4 @@ export const { POSTGRES_USER } = process.env;
 export const { POSTGRES_PASSWORD } = process.env;
 export const { POSTGRES_DB } = process.env;
 export const { POSTGRES_HOST } = process.env;
+export const { USE_FASTIFY } = process.env;
