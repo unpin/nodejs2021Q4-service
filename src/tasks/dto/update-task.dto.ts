@@ -1,10 +1,9 @@
 import { CreateTaskDto } from './create-task.dto';
 import { PartialType } from '@nestjs/mapped-types';
-import { Optional } from '@nestjs/common';
-import { IsString } from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 
 export class UpdateTaskDto extends PartialType(CreateTaskDto) {
-  @Optional()
+  @IsOptional()
   @IsString()
   readonly id: string;
 }
