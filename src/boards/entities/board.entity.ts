@@ -1,8 +1,15 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BoardColumn } from '../../columns/entities/column.entity';
 
 @Entity()
 export class Board {
+  @Index()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

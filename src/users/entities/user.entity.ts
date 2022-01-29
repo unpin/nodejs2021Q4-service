@@ -5,12 +5,14 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { JWT_SECRET_KEY } from '../../common/config';
 
 @Entity()
 export class User {
+  @Index()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

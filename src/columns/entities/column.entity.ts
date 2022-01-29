@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -9,6 +10,7 @@ import { Board } from '../../boards/entities/board.entity';
 
 @Entity()
 export class BoardColumn {
+  @Index()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

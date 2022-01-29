@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -10,6 +11,7 @@ import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Task {
+  @Index()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
