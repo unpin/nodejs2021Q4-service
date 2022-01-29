@@ -40,4 +40,8 @@ export class User {
       expiresIn: '12h',
     });
   }
+
+  passwordsMatch(password: string) {
+    return bcrypt.compareSync(password, this.password);
+  }
 }
