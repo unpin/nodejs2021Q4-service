@@ -1,5 +1,12 @@
+import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { JWT_SECRET_KEY } from '../../common/config';
 
 @Entity()
@@ -15,6 +22,12 @@ export class User {
 
   @Column()
   password: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPassword() {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
 
   static toResponse(user: Omit<User, 'id'>) {
     const publicUser = { ...user };
