@@ -10,6 +10,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
@@ -21,9 +22,8 @@ export class TaskController {
 
   @Get(':boardId/tasks')
   @HttpCode(HttpStatus.OK)
-  findAll(@Query() paginationQuery: { limit: number; offset: number }) {
-    const { limit, offset } = paginationQuery;
-    return this.taskService.findAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.taskService.findAll(paginationQueryDto);
   }
 
   @Get(':boardId/tasks/:taskId')

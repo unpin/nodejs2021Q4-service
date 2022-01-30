@@ -10,6 +10,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
@@ -20,9 +21,8 @@ export class BoardController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll(@Query() paginationQuery: { limit: number; offset: number }) {
-    const { limit, offset } = paginationQuery;
-    return this.boardService.findAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.boardService.findAll(paginationQueryDto);
   }
 
   @Get(':boardId')

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
@@ -12,8 +13,12 @@ export class TaskService {
     private readonly taskRepository: Repository<Task>,
   ) {}
 
-  findAll() {
-    return this.taskRepository.find();
+  findAll(paginationQueryDto: PaginationQueryDto) {
+    const { limit = 50, offset = 0 } = paginationQueryDto;
+    return this.taskRepository.find({
+      skip: offset,
+      take: limit,
+    });
   }
 
   async findOne(id: string) {

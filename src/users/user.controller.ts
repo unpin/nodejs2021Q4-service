@@ -10,6 +10,7 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -21,9 +22,8 @@ export class UserController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll(@Query() paginationQuery: { limit: number; offset: number }) {
-    const { limit, offset } = paginationQuery;
-    return this.userService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    return this.userService.findAll(paginationQuery);
   }
 
   @Get(':userId')

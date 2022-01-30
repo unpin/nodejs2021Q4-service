@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BoardColumn } from '../columns/entities/column.entity';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { Board } from './entities/board.entity';
@@ -15,9 +16,12 @@ export class BoardService {
     private readonly columnRepository: Repository<BoardColumn>,
   ) {}
 
-  findAll() {
+  findAll(paginationQueryDto: PaginationQueryDto) {
+    const { limit = 50, offset = 0 } = paginationQueryDto;
     return this.boardRepository.find({
       relations: ['columns'],
+      skip: offset,
+      take: limit,
     });
   }
 
