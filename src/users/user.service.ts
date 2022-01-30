@@ -13,13 +13,12 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll(paginationQueryDto: PaginationQueryDto) {
+  findAll(paginationQueryDto: PaginationQueryDto) {
     const { limit = 50, offset = 0 } = paginationQueryDto;
-    const users = await this.userRepository.find({
+    return this.userRepository.find({
       skip: offset,
       take: limit,
     });
-    return users.map(User.toResponse);
   }
 
   async findOne(id: string) {
@@ -40,7 +39,8 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
-    return this.userRepository.save(user);
+    const updated = await this.userRepository.save(user);
+    return User.toResponse(updated);
   }
 
   async remove(id: string) {

@@ -23,6 +23,7 @@ export class AuthService {
   private async findOne(login: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { login },
+      select: ['id', 'login', 'password'],
     });
     if (!user) {
       throw new ForbiddenException('Login or password is incorrect');
