@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import * as userService from './user.service';
+import { isAuthorized } from '../../middleware/isAuthorized';
 
 const router: Router = Router();
 
-router.post('/users', userService.create);
-router.get('/users', userService.getAll);
-router.get('/users/:userID', userService.getById);
-router.put('/users/:userID', userService.findByIdAndUpdate);
-router.delete('/users/:userID', userService.findByIdAndDelete);
+router.post('/users', isAuthorized, userService.create);
+router.get('/users', isAuthorized, userService.getAll);
+router.get('/users/:userID', isAuthorized, userService.getById);
+router.put('/users/:userID', isAuthorized, userService.findByIdAndUpdate);
+router.delete('/users/:userID', isAuthorized, userService.findByIdAndDelete);
 
 export default router;

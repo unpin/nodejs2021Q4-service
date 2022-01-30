@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import HTTP_STATUS from '../../common/constants';
 import UUID from '../../utils/uuid/UUID';
@@ -23,9 +24,17 @@ export async function create(
   response: Response
 ): Promise<void> {
   try {
-    const saved = await userRepo.createOne(request.body);
-    response.status(HTTP_STATUS.CREATED);
-    response.send(toResponse(saved));
+    const user = request.body;
+    if (!user.login || !user.password) {
+      response
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .send({ message: 'login and password fields are required' });
+    } else {
+      user.password = bcrypt.hashSync(user.password, 10);
+      const saved = await userRepo.createOne(user);
+      response.status(HTTP_STATUS.CREATED);
+      response.send(toResponse(saved));
+    }
   } catch (error) {
     httpErrorHandler(request, response, error);
   }
@@ -111,6 +120,9 @@ export async function findByIdAndUpdate(
       response.status(HTTP_STATUS.BAD_REQUEST);
       response.send({ message: 'User ID is not valid.' });
     } else {
+      if (request.body.password) {
+        request.body.password = bcrypt.hashSync(request.body.password, 10);
+      }
       const updated = await userRepo.updateOne({ id: userID }, request.body);
       if (updated) {
         response.status(HTTP_STATUS.OK);

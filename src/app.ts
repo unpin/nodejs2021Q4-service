@@ -4,6 +4,7 @@ import './setupLogger';
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
+import authRouter from './resources/auth/auth.router';
 import loggerMiddleware from './middleware/loggerMiddleware';
 import { Logger } from './lib/logger/Logger';
 
@@ -18,6 +19,7 @@ app.use(loggerMiddleware);
 app.use(userRouter);
 app.use(boardRouter);
 app.use(taskRouter);
+app.use(authRouter);
 
 function handleUncaughtError(error: unknown): void {
   if (error instanceof Error) {
