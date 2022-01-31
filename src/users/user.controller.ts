@@ -9,6 +9,7 @@ import {
   Put,
   Delete,
   Query,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -28,7 +29,7 @@ export class UserController {
 
   @Get(':userId')
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('userId') userId: string) {
+  findOne(@Param('userId', ParseUUIDPipe) userId: string) {
     return this.userService.findOne(userId);
   }
 
@@ -42,7 +43,7 @@ export class UserController {
   @Put(':userId')
   @HttpCode(HttpStatus.OK)
   update(
-    @Param('userId') userId: string,
+    @Param('userId', ParseUUIDPipe) userId: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.userService.update(userId, updateUserDto);
@@ -50,7 +51,7 @@ export class UserController {
 
   @Delete(':userId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('userId') userId: string) {
+  remove(@Param('userId', ParseUUIDPipe) userId: string) {
     return this.userService.remove(userId);
   }
 }
