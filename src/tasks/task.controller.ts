@@ -9,13 +9,16 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
+import { AuthGuard } from '../common/guards/auth.guard';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
 import { TaskService } from './task.service';
 
+@UseGuards(AuthGuard)
 @Controller('boards')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}

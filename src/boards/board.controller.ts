@@ -9,12 +9,15 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
+import { AuthGuard } from '../common/guards/auth.guard';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 
+@UseGuards(AuthGuard)
 @Controller('boards')
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}
