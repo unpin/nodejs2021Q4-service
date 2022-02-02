@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { USE_FASTIFY, PORT } from './common/config';
 import { ValidationPipe } from '@nestjs/common';
 import {
   FastifyAdapter,
@@ -10,7 +9,7 @@ import {
 async function bootstrap() {
   let app;
 
-  if (USE_FASTIFY === 'true') {
+  if (process.env.USE_FASTIFY === 'true') {
     app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
       new FastifyAdapter(),
@@ -20,7 +19,6 @@ async function bootstrap() {
   }
 
   app.enableCors();
-
-  await app.listen(PORT, '0.0.0.0');
+  await app.listen(process.env.PORT, '0.0.0.0');
 }
 bootstrap();

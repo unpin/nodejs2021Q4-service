@@ -8,7 +8,6 @@ import {
   Index,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { JWT_SECRET_KEY } from '../../common/config';
 
 @Entity()
 export class User {
@@ -38,9 +37,13 @@ export class User {
   }
 
   generateJWTToken() {
-    return jwt.sign({ usedId: this.id, login: this.login }, JWT_SECRET_KEY, {
-      expiresIn: '12h',
-    });
+    return jwt.sign(
+      { usedId: this.id, login: this.login },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '12h',
+      },
+    );
   }
 
   passwordsMatch(password: string) {
