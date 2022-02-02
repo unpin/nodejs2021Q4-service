@@ -23,25 +23,25 @@ export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
   @Get()
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   findAll(@Query() paginationQueryDto: PaginationQueryDto) {
     return this.boardService.findAll(paginationQueryDto);
   }
 
   @Get(':boardId')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   findOne(@Param('boardId') boardId: string) {
     return this.boardService.findOne(boardId);
   }
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
+  // @HttpCode(HttpStatus.CREATED)
   create(@Body() createBoardDto: CreateBoardDto) {
     return this.boardService.create(createBoardDto);
   }
 
   @Put(':boardId')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   update(
     @Param('boardId') boardId: string,
     @Body() updateBoardDto: UpdateBoardDto,
@@ -50,7 +50,7 @@ export class BoardController {
   }
 
   @Delete(':boardId')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  // @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('boardId') boardId: string) {
     return this.boardService.remove(boardId);
   }

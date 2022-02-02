@@ -25,26 +25,26 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.userService.findAll(paginationQuery);
   }
 
   @Get(':userId')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   findOne(@Param('userId', ParseUUIDPipe) userId: string) {
     return this.userService.findOne(userId);
   }
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
+  // @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.userService.create(createUserDto);
     return User.toResponse(user);
   }
 
   @Put(':userId')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   update(
     @Param('userId', ParseUUIDPipe) userId: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -53,7 +53,7 @@ export class UserController {
   }
 
   @Delete(':userId')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  // @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('userId', ParseUUIDPipe) userId: string) {
     return this.userService.remove(userId);
   }

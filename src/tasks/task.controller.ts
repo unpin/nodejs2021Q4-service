@@ -24,19 +24,19 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Get(':boardId/tasks')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   findAll(@Query() paginationQueryDto: PaginationQueryDto) {
     return this.taskService.findAll(paginationQueryDto);
   }
 
   @Get(':boardId/tasks/:taskId')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   findOne(@Param('taskId') taskId: string) {
     return this.taskService.findOne(taskId);
   }
 
   @Post(':boardId/tasks')
-  @HttpCode(HttpStatus.CREATED)
+  // @HttpCode(HttpStatus.CREATED)
   create(
     @Param('boardId') boardId: string,
     @Body() createTaskDto: CreateTaskDto,
@@ -47,7 +47,7 @@ export class TaskController {
   }
 
   @Put(':boardId/tasks/:taskId')
-  @HttpCode(HttpStatus.OK)
+  // @HttpCode(HttpStatus.OK)
   update(
     @Param('taskId') taskId: string,
     @Body() updateTaskDto: UpdateTaskDto,
@@ -56,7 +56,7 @@ export class TaskController {
   }
 
   @Delete(':boardId/tasks/:taskId')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  // @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('taskId') taskId: string) {
     return this.taskService.remove(taskId);
   }
