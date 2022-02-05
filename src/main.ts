@@ -6,16 +6,20 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import fmp from 'fastify-multipart';
 
 async function bootstrap() {
   let app;
 
   if (process.env.USE_FASTIFY === 'true') {
+    console.log('Application is powered by Fastify');
     app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
       new FastifyAdapter(),
     );
+    app.register(fmp);
   } else {
+    console.log('Application app is powered Express');
     app = await NestFactory.create(AppModule);
   }
   app.useGlobalPipes(

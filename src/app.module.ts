@@ -7,6 +7,7 @@ import { UserModule } from './users/user.module';
 import { BoardModule } from './boards/board.module';
 import { TaskModule } from './tasks/task.module';
 import { AuthModule } from './auth/auth.module';
+import { FileModule } from './files/file.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from './auth/auth.module';
     BoardModule,
     TaskModule,
     AuthModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
