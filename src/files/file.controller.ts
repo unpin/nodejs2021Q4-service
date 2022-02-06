@@ -6,14 +6,17 @@ import {
   Req,
   Res,
   UseFilters,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { FileService } from './file.service';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { Request, Response } from 'express';
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
+import { LoggingInterceptor } from '../common/interceptors/logging-interceptor';
 
 @UseFilters(new HttpExceptionFilter())
+@UseInterceptors(LoggingInterceptor)
 @Controller('file')
 export class FileController {
   constructor(private readonly fileService: FileService) {}

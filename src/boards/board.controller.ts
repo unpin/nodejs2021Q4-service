@@ -8,14 +8,17 @@ import {
   Put,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { AuthGuard } from '../common/guards/auth.guard';
+import { LoggingInterceptor } from '../common/interceptors/logging-interceptor';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 
 @UseGuards(AuthGuard)
+@UseInterceptors(LoggingInterceptor)
 @Controller('boards')
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}

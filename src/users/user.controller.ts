@@ -9,15 +9,18 @@ import {
   Query,
   ParseUUIDPipe,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { AuthGuard } from '../common/guards/auth.guard';
+import { LoggingInterceptor } from '../common/interceptors/logging-interceptor';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
 @UseGuards(AuthGuard)
+@UseInterceptors(LoggingInterceptor)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
