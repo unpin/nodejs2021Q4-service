@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './users/user.module';
 import { BoardModule } from './boards/board.module';
+import { ColumnModule } from './columns/column.module';
 import { TaskModule } from './tasks/task.module';
 import { AuthModule } from './auth/auth.module';
 import { FileModule } from './files/file.module';
@@ -27,6 +28,7 @@ import { FileModule } from './files/file.module';
     }),
     UserModule,
     BoardModule,
+    ColumnModule,
     TaskModule,
     AuthModule,
     FileModule,
