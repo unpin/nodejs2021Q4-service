@@ -9,6 +9,7 @@ import { ColumnModule } from './columns/column.module';
 import { TaskModule } from './tasks/task.module';
 import { AuthModule } from './auth/auth.module';
 import { FileModule } from './files/file.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
   imports: [
@@ -32,8 +33,9 @@ import { FileModule } from './files/file.module';
     TaskModule,
     AuthModule,
     FileModule,
+    LoggerModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, LoggerModule],
 })
 export class AppModule {}

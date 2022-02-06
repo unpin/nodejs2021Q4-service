@@ -7,6 +7,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import fmp from 'fastify-multipart';
+import { FileLogger } from './logger/logger.service';
 
 async function bootstrap() {
   let app;
@@ -34,6 +35,7 @@ async function bootstrap() {
   );
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors();
+  app.useLogger(app.get(FileLogger));
   await app.listen(process.env.PORT, '0.0.0.0');
 }
 bootstrap();
