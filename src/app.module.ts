@@ -10,6 +10,10 @@ import { TaskModule } from './tasks/task.module';
 import { AuthModule } from './auth/auth.module';
 import { FileModule } from './files/file.module';
 import { LoggerModule } from './logger/logger.module';
+import { User } from './users/entities/user.entity';
+import { Board } from './boards/entities/board.entity';
+import { BoardColumn } from './columns/entities/column.entity';
+import { Task } from './tasks/entities/task.entity';
 
 @Module({
   imports: [
@@ -22,9 +26,10 @@ import { LoggerModule } from './logger/logger.module';
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DB,
-        autoLoadEntities: true,
-        synchronize: true,
+        autoLoadEntities: false,
+        synchronize: false,
         migrationsRun: false,
+        entities: [User, Board, BoardColumn, Task],
       }),
     }),
     UserModule,
