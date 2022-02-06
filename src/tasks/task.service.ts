@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
@@ -24,7 +24,9 @@ export class TaskService {
   async findOne(id: string) {
     const task = await this.taskRepository.findOne(id);
     if (!task) {
-      throw new NotFoundException(`Task with id ${id} not found`);
+      const message = `Task with id ${id} not found`;
+      Logger.debug(message);
+      throw new NotFoundException(message);
     }
     return task;
   }
@@ -38,7 +40,9 @@ export class TaskService {
   async update(id: string, updateTaskDto: UpdateTaskDto) {
     const task = await this.taskRepository.preload({ id, ...updateTaskDto });
     if (!task) {
-      throw new NotFoundException(`Task with id ${id} not found`);
+      const message = `Task with id ${id} not found`;
+      Logger.debug(message);
+      throw new NotFoundException(message);
     }
     return this.taskRepository.save(task);
   }

@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
@@ -14,7 +14,9 @@ export class AuthService {
   async signIn(authDto: AuthDto) {
     const user = await this.findOne(authDto.login);
     if (!user.passwordsMatch(authDto.password)) {
-      throw new ForbiddenException('Login or password is incorrect');
+      const message = `Login or password is incorrect`;
+      Logger.debug(message);
+      throw new ForbiddenException(message);
     }
     const token = user.generateJWTToken();
     return { token };
@@ -26,7 +28,9 @@ export class AuthService {
       select: ['id', 'login', 'password'],
     });
     if (!user) {
-      throw new ForbiddenException('Login or password is incorrect');
+      const message = `Login or password is incorrect`;
+      Logger.debug(message);
+      throw new ForbiddenException(message);
     }
     return user;
   }

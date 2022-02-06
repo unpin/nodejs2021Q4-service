@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BoardService } from '../boards/board.service';
@@ -22,7 +22,9 @@ export class ColumnService {
   async findOne(id: string) {
     const column = await this.columnRepository.findOne(id);
     if (!column) {
-      throw new NotFoundException('Column with the columnId does not exist');
+      const message = `Column with the id ${id} is not found`;
+      Logger.debug(message);
+      throw new NotFoundException(message);
     }
     return column;
   }
@@ -40,9 +42,9 @@ export class ColumnService {
       ...updateColumnDto,
     });
     if (!column) {
-      throw new NotFoundException(
-        'Column with the given columnId does not exist',
-      );
+      const message = `Column with the id ${id} is not found`;
+      Logger.debug(message);
+      throw new NotFoundException(message);
     }
     return await this.columnRepository.save(column);
   }

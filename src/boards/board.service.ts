@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BoardColumn } from '../columns/entities/column.entity';
@@ -30,7 +30,9 @@ export class BoardService {
       relations: ['columns'],
     });
     if (!board) {
-      throw new NotFoundException(`Board with id ${id} not found`);
+      const message = `Board with the id ${id} is not found`;
+      Logger.debug(message);
+      throw new NotFoundException(message);
     }
     return board;
   }
@@ -48,7 +50,9 @@ export class BoardService {
     delete boardToUpdate.id;
     const board = await this.boardRepository.preload({ id, ...updateBoardDto });
     if (!board) {
-      throw new NotFoundException(`Board with id ${id} not found`);
+      const message = `Board with the id ${id} is not found`;
+      Logger.debug(message);
+      throw new NotFoundException(message);
     }
     return this.boardRepository.save(board);
   }

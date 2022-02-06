@@ -7,6 +7,7 @@ import {
   HttpException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
   StreamableFile,
 } from '@nestjs/common';
@@ -60,12 +61,14 @@ export class FileService {
           ),
         });
       } catch (err) {
+        Logger.error(err);
         throw new InternalServerErrorException('Something went wrong');
       }
     }, onEnd);
 
     async function onEnd(err: Error) {
       if (err) {
+        Logger.error(err);
         res.send(new InternalServerErrorException('Internal server error'));
         return;
       }
@@ -78,6 +81,7 @@ export class FileService {
       await stat(filePath);
       return new StreamableFile(fs.createReadStream(filePath));
     } catch (error) {
+      Logger.debug(error);
       throw new NotFoundException('File not found!');
     }
   }
