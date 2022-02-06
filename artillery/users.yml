@@ -1,0 +1,84 @@
+config:
+  target: 'http://localhost:4000'
+  phases:
+    - duration: 100
+      arrivalRate: 50
+      name: Sustained load
+  payload:
+    path: 'auth.csv'
+    fields:
+      - 'login'
+      - 'password'
+scenarios:
+  - name: 'Login and get users'
+    flow:
+      - post:
+          url: '/login'
+          json:
+            login: '{{ login }}'
+            password: '{{ password }}'
+          capture:
+            - json: '$.token'
+              as: 'JWT_TOKEN'
+      - get:
+          url: '/users'
+          headers:
+            Authorization: 'Bearer {{ JWT_TOKEN }}'
+  - name: 'Login, create and delete user'
+    flow:
+      - post:
+          url: '/login'
+          json:
+            login: '{{ login }}'
+            password: '{{ password }}'
+          capture:
+            - json: '$.token'
+              as: 'JWT_TOKEN'
+      - post:
+          url: '/users'
+          json:
+            name: 'John Doe'
+            login: 'johndoe'
+            password: 'balonka1'
+          headers:
+            Authorization: 'Bearer {{ JWT_TOKEN }}'
+          capture:
+            - json: '$.id'
+              as: 'userId'
+      - delete:
+          url: '/users/{{ userId }}'
+          headers:
+            Authorization: 'Bearer {{ JWT_TOKEN }}'
+  - name: 'Login, create, update and delete user'
+    flow:
+      - post:
+          url: '/login'
+          json:
+            login: '{{ login }}'
+            password: '{{ password }}'
+          capture:
+            - json: '$.token'
+              as: 'JWT_TOKEN'
+      - post:
+          url: '/users'
+          json:
+            name: 'Bender'
+            login: 'bender'
+            password: 'bender'
+          headers:
+            Authorization: 'Bearer {{ JWT_TOKEN }}'
+          capture:
+            - json: '$.id'
+              as: 'userId'
+      - put:
+          url: '/users/{{ userId }}'
+          json:
+            password: 'redned'
+          headers:
+            Authorization: 'Bearer {{ JWT_TOKEN }}'
+      - get:
+          url: '/users/{{ userId }}'
+      - delete:
+          url: '/users/{{ userId }}'
+          headers:
+            Authorization: 'Bearer {{ JWT_TOKEN }}'

@@ -24,7 +24,8 @@
     "docker:down": "docker-compose down && docker volume rm nodejs2021q4-service_postgres-data && docker volume rm nodejs2021q4-service_application-logs",
     "typeorm:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n PostgresMigration --config ormconfig.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "start:devs": "npm run typeorm migration:run && npm run start:dev"
+    "start:devs": "npm run typeorm migration:run && npm run start:dev",
+    "artillery": "artillery run artillery/users.yml"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
