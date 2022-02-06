@@ -66,6 +66,62 @@ After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
+## Performance comparison
+
+### Express |
+
+|                                                      |         |
+| ---------------------------------------------------- | ------- |
+| errors.ECONNREFUSED                                  | 35      |
+| http.codes.200                                       | 5444    |
+| http.codes.201                                       | 8130    |
+| http.request_rate                                    | 122/sec |
+| http.requests                                        | 13708   |
+| http.response_time                                   |         |
+| min                                                  | 1       |
+| max                                                  | 5194    |
+| median                                               | 497.8   |
+| p95                                                  | 4583.6  |
+| p99                                                  | 4867    |
+| http.responses                                       | 13574   |
+| vusers.completed                                     | 5444    |
+| vusers.created                                       | 5579    |
+| vusers.created_by_name.Login and get users           | 2810    |
+| vusers.created_by_name.Login, create and delete user | 2769    |
+| vusers.failed                                        | 35      |
+| vusers.session_length                                |
+| min                                                  | 11.7    |
+| ma                                                   | 6469.5  |
+| median                                               | 4231.1  |
+| p95                                                  | 5487.5  |
+| p99                                                  | 5826.9  |
+
+### Fastify
+
+|                                                      |         |
+| ---------------------------------------------------- | ------- |
+| http.codes.200                                       | 6000    |
+| http.codes.201                                       | 8936    |
+| http.request_rate                                    | 125/sec |
+| http.requests                                        | 14936   |
+| http.response_time                                   |         |
+| min                                                  | 0       |
+| max                                                  | 1457    |
+| median                                               | 4       |
+| p95                                                  | 837.3   |
+| p99                                                  | 1176.4  |
+| http.responses                                       | 14936   |
+| vusers.completed                                     | 6000    |
+| vusers.created                                       | 6000    |
+| vusers.created_by_name.Login and get users           | 3064    |
+| vusers.created_by_name.Login, create and delete user | 2936    |
+| vusers.session_length                                |         |
+| min                                                  | 5.1     |
+| max                                                  | 2634.9  |
+| median                                               | 16      |
+| p95                                                  | 1587.9  |
+| p99                                                  | 1939.5  |
+
 ## Testing
 
 After application running open new terminal and enter:
