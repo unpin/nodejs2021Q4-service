@@ -18,6 +18,8 @@ async function bootstrap() {
       AppModule,
       new FastifyAdapter(),
     );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     app.register(fmp);
   } else {
     console.log('Application app is powered Express');
