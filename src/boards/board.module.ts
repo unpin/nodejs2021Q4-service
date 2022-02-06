@@ -12,5 +12,6 @@ import { Board } from './entities/board.entity';
   ],
   controllers: [BoardController],
   providers: [BoardService],
+  exports: [BoardService],
 })
 export class BoardModule {}
