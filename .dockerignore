@@ -1,0 +1,8 @@
+.github
+.vscode
+coverage
+database
+dist
+doc
+node_modules
+uploads
