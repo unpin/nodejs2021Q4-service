@@ -18,7 +18,12 @@ export class HttpExceptionFilter<T extends HttpException>
 
     const status = exception.getStatus();
     const exceptionResponse = exception.getResponse();
-    const res = host.switchToHttp().getResponse();
+
+    let res = host.switchToHttp().getResponse();
+    if (process.env.USE_FASTIFY === 'true') {
+      res = res.raw;
+    }
+
     res.on('finish', () => {
       const { method, url, query, body } = host.switchToHttp().getRequest();
       const duration = `${Date.now() - now}ms`;
