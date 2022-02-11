@@ -12,7 +12,8 @@ services:
       - type: bind
         source: ./src
         target: /home/app/src
-      - app_logs:/home/app/logs
+      - application-logs:/home/app/logs
+      - file-uploads:/home/app/uploads
     restart: unless-stopped
     networks:
       - rest-network
@@ -26,14 +27,15 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
       - rest-network
 
 volumes:
-  postgres_data:
-  app_logs:
+  postgres-data:
+  application-logs:
+  file-uploads:
 
 networks:
   rest-network:

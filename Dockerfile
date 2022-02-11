@@ -4,12 +4,12 @@ RUN mkdir -p /home/app
 
 WORKDIR /home/app
 
+RUN npm install -g @nestjs/cli typeorm ts-node-dev
+
 COPY package*.json .
 
-RUN npm install -g nodemon ts-node
-
-RUN npm install --production
+RUN npm install
 
 COPY . .
 
-CMD [ "npm", "start" ]
+CMD ["npm", "run", "start:devs"]

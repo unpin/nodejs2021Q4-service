@@ -1,21 +1,16 @@
-import * as CONFIG from './src/common/config';
-
-import { User } from './src/entity/User';
-import { Board } from './src/entity/Board';
-import { Task } from './src/entity/Task';
+import 'dotenv';
 
 export default {
-  type: CONFIG.POSTGRES_TYPE,
-  host: CONFIG.POSTGRES_HOST,
-  port: CONFIG.POSTGRES_PORT,
-  username: CONFIG.POSTGRES_USER,
-  password: CONFIG.POSTGRES_PASSWORD,
-  database: CONFIG.POSTGRES_DB,
-  logging: CONFIG.POSTGRES_LOGGING,
+  type: 'postgres',
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
   migrationsRun: true,
   synchronize: false,
-  entities: [User, Board, Task],
-  migrations: ['src/migration/**/*.ts'],
+  entities: ['src/**/*.entity{.ts,.js}'],
+  migrations: ['src/migrations/**/*{.ts,.js}'],
   subscribers: ['src/subscriber/**/*.ts'],
   cli: {
     entitiesDir: 'src/entity',
